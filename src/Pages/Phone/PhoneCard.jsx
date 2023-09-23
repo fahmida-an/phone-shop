@@ -1,5 +1,33 @@
+import { json } from "react-router-dom";
+
 const PhoneCard = ({ phone }) => {
   const { id, phone_name, brand_name, rating, price, image } = phone || {};
+  const handleaddtoFavourites = () =>{
+    // console.log(phone);
+    // local storage set hibe
+    const addedFavouritesArray =[];
+    const favouriteItems = JSON.parse(localStorage.getItem('favourites'));
+    // jokhon kichu thakbe na tkn zabe
+    if(!favouriteItems){
+        addedFavouritesArray.push(phone)
+        localStorage.setItem('favourites', JSON.stringify(addedFavouritesArray))
+    }
+    else{
+        const isExists = favouriteItems.find(phone => phone.id === id)
+        if(!isExists){
+            addedFavouritesArray.push( ...favouriteItems, phone)
+            localStorage.setItem('favourites', JSON.stringify(addedFavouritesArray))
+            alert('product added')
+        }
+        else{
+            alert('already added')
+        }
+      
+    }
+
+   
+
+  }
 
   return (
     <div className="flex justify-center items-center h-[80vh]">
@@ -17,6 +45,7 @@ const PhoneCard = ({ phone }) => {
 
           <a className="inline-block" href="#">
             <button
+            onClick={handleaddtoFavourites}
               className="flex select-none items-center gap-2 rounded-lg py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-pink-500 transition-all hover:bg-pink-500/10 active:bg-pink-500/30 disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
               type="button"
             >
@@ -45,3 +74,4 @@ const PhoneCard = ({ phone }) => {
 };
 
 export default PhoneCard;
+
