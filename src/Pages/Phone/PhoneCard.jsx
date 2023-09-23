@@ -1,4 +1,5 @@
-import { json } from "react-router-dom";
+import swal from "sweetalert";
+
 
 const PhoneCard = ({ phone }) => {
   const { id, phone_name, brand_name, rating, price, image } = phone || {};
@@ -13,14 +14,19 @@ const PhoneCard = ({ phone }) => {
         localStorage.setItem('favourites', JSON.stringify(addedFavouritesArray))
     }
     else{
+
         const isExists = favouriteItems.find(phone => phone.id === id)
+
+
+
         if(!isExists){
+
             addedFavouritesArray.push( ...favouriteItems, phone)
             localStorage.setItem('favourites', JSON.stringify(addedFavouritesArray))
-            alert('product added')
+            swal("Good job!", "Products added successfully!", "success");
         }
         else{
-            alert('already added')
+            swal("Error!", "No Duplicate ", "error");
         }
       
     }
